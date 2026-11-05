@@ -134,7 +134,38 @@ fun MainScreen(
             }
 
             // 4. Daftar Aplikasi
-            if (apps.isEmpty()) {
+            if (selectedTab == 1 && profileState is ProfileState.NotCreated) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                ) {
+                    Text(
+                        text = "Profil Kerja Belum Aktif",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Buat profil kerja terisolasi secara otomatis langsung dari HP dalam 1 klik tanpa komputer atau ADB.",
+                        fontSize = 13.sp,
+                        color = Color.Gray,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Button(
+                        onClick = onCreateProfileClick,
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .height(50.dp)
+                    ) {
+                        Text("⚡ BUAT PROFIL SEKARANG (OTOMATIS)", fontWeight = FontWeight.Bold)
+                    }
+                }
+            } else if (apps.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -144,8 +175,6 @@ fun MainScreen(
                     Text(
                         text = if (selectedTab == 1 && profileState is ProfileState.Quiet) {
                             "Sandbox sedang tertidur (Quiet Mode aktif).\nBangunkan profil untuk melihat dan menjalankan aplikasi."
-                        } else if (selectedTab == 1 && profileState is ProfileState.NotCreated) {
-                            "Sandbox belum dibuat.\nTekan tombol di atas untuk membuat ruang isolasi."
                         } else {
                             "Tidak ada aplikasi ditemukan."
                         },
@@ -170,7 +199,7 @@ fun MainScreen(
                                 } else if (profileState is ProfileState.Quiet) {
                                     viewModel.cloneApp(app, (profileState as ProfileState.Quiet).userHandle)
                                 } else {
-                                    viewModel.showAdbProvisioningGuide()
+                                    onCreateProfileClick()
                                 }
                             }
                         )

@@ -108,6 +108,13 @@ class AppRepository(
                     DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION,
                     true
                 )
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    putExtra(
+                        @Suppress("DEPRECATION")
+                        DevicePolicyManager.EXTRA_PROVISIONING_SKIP_USER_CONSENT,
+                        true
+                    )
+                }
             }
             if (intent.resolveActivity(activity.packageManager) != null) {
                 activity.startActivityForResult(intent, requestCode)

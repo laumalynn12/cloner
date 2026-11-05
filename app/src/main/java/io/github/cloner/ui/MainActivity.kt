@@ -56,12 +56,7 @@ class MainActivity : ComponentActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PROVISION_PROFILE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this, "Pembuatan profil kerja berhasil!", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.w(TAG, "Provisioning profil dibatalkan atau gagal: resultCode=$resultCode")
-                Toast.makeText(this, "Provisioning dibatalkan atau gagal.", Toast.LENGTH_LONG).show()
-            }
+            Toast.makeText(this, "Sedang menyiapkan profil otomatis...", Toast.LENGTH_SHORT).show()
             viewModel.refresh()
         }
     }
