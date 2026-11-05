@@ -63,9 +63,11 @@ class QuietModeManager(private val context: Context) {
             }
         } catch (e: SecurityException) {
             Log.e(TAG, "SecurityException saat memanggil requestQuietModeEnabled", e)
+            openSystemSyncSettings()
             QuietModeResult.PermissionRequired(
-                "Izin MODIFY_QUIET_MODE diperlukan. Berikan via ADB:\n" +
-                "adb shell pm grant ${context.packageName} android.permission.MODIFY_QUIET_MODE"
+                "Untuk menonaktifkan profil kerja tanpa PC/ADB:\n\n" +
+                "1. Tarik panel notifikasi atas (Quick Settings) lalu ketuk toggle 'Profil Kerja' (Work Profile), ATAU\n" +
+                "2. Matikan toggle profil kerja langsung melalui menu Pengaturan Akun yang baru saja terbuka."
             )
         } catch (e: Exception) {
             Log.e(TAG, "Gagal mengubah quiet mode", e)

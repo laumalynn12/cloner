@@ -92,14 +92,34 @@ class AppRepository(
         }
     }
 
-    fun startManagedProfileProvisioning(activity: Activity, requestCode: Int) {
-        val intent = Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
-            putExtra(
-                DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
-                dpcManager.adminComponent
-            )
+    fun startManagedProfileProvisioning(activity: Activity, requestCode: Int): Boolean {
+        return try {
+            val intent = Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
+                putExtra(
+                    DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
+                    dpcManager.adminComponent
+                )
+                putExtra(
+                    @Suppress("DEPRECATION")
+                    DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_PACKAGE_NAME,
+                    context.packageName
+                )
+                putExtra(
+                    DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION,
+                    true
+                )
+            }
+            if (intent.resolveActivity(activity.packageManager) != null) {
+                activity.startActivityForResult(intent, requestCode)
+                true
+            } else {
+                Log.e(TAG, "Sistem tidak memiliki handler ManagedProvisioning.")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Gagal memulai provisioning profil kerja", e)
+            false
         }
-        activity.startActivityForResult(intent, requestCode)
     }
 
     companion object {

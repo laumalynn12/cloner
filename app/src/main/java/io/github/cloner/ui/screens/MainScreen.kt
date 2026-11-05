@@ -217,19 +217,16 @@ fun ProfileStatusBanner(
                         fontSize = 15.sp
                     )
                     Text(
-                        text = "Buat profil kerja untuk mengisolasi Google Play Store dan aplikasi dengan performa maksimal.",
+                        text = "Buat profil kerja untuk mengisolasi Google Play Store dan aplikasi secara langsung dari HP (tanpa PC/ADB).",
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row {
-                        Button(onClick = onCreateProfile) {
-                            Text("Buat Sandbox (Otomatis)", fontSize = 12.sp)
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        OutlinedButton(onClick = onShowAdbGuide) {
-                            Text("Panduan ADB", fontSize = 12.sp)
-                        }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Button(
+                        onClick = onCreateProfile,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Buat Sandbox Langsung (1-Klik)", fontWeight = FontWeight.Bold)
                     }
                 }
 

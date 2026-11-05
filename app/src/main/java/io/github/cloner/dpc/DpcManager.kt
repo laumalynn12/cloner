@@ -27,6 +27,14 @@ class DpcManager(private val context: Context) {
     val isDeviceOwner: Boolean
         get() = dpm.isDeviceOwnerApp(context.packageName)
 
+    fun isProvisioningAllowed(): Boolean {
+        return try {
+            dpm.isProvisioningAllowed(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE)
+        } catch (e: Exception) {
+            true
+        }
+    }
+
     fun setApplicationHidden(packageName: String, hidden: Boolean): Boolean {
         return try {
             dpm.setApplicationHidden(adminComponent, packageName, hidden)
